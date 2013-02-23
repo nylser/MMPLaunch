@@ -1,4 +1,4 @@
-package de.mineguild;
+package de.mineguild.gui;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
