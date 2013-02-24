@@ -18,6 +18,13 @@ public class Download extends JDialog {
     private JProgressBar totalDownloadProgress;
     private JTextArea downloadPInfo;
     private Thread t;
+    private static int status = 0;
+
+    //Status declared here.
+    final static int DOWNLOAD_SUCCESSFULL = 0;
+    final static int ERROR_OCCURRED = 1;
+    final static int FILES_MISSING = 2;
+
 
     public Download() {
         setContentPane(contentPane);
@@ -57,15 +64,15 @@ public class Download extends JDialog {
         }, KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
     }
 
-    public static void show(Map<File, URL> list) {
+    public static int show(Map<File, URL> list) {
         dList = list;
         Download dialog = new Download();
         dialog.pack();
         dialog.setVisible(true);
+        return status;
     }
 
     private void onCancel() {
-// add your code here if necessary
         t.interrupt();
         close();
     }
@@ -78,11 +85,13 @@ public class Download extends JDialog {
 
         if (list.size() != 0) {
         } else {
-            System.out.println("The linklist is either empty or null!");
-            System.exit(0);
+            System.out.println("The linklist is empty!");
+            status = ERROR_OCCURRED;
+            close();
         }
 
         t = new Thread() {
+
             public void run() {
                 float totalProgress;
                 float totalSize = 0;
@@ -96,6 +105,8 @@ public class Download extends JDialog {
                         totalSize += connection.getContentLength();
                     } catch (Exception e) {
                         e.printStackTrace();
+                        status = ERROR_OCCURRED;
+                        close();
                         Thread.currentThread().interrupt();
                     }
 
@@ -106,7 +117,10 @@ public class Download extends JDialog {
                     c++;
                     File curFile = entry.getKey();
                     URL curUrl = entry.getValue();
-                    if (curFile.exists()) curFile.delete();
+                    if (curFile.exists() && !curFile.delete()) {
+                        status = FILES_MISSING;
+                        break;
+                    }
 
                     try {
 

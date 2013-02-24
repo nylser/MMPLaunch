@@ -22,7 +22,7 @@ public class LoginUtils {
     public static final int INVALID = 2;
     public static final int ERROR_OCCURRED = 3;
 
-    private static String getHash(String src) {
+    public static String getHash(String src) {
         try {
             MessageDigest md = MessageDigest.getInstance("MD5");
             byte[] array = md.digest(src.getBytes());

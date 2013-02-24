@@ -3,6 +3,7 @@ package de.mineguild.gui;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 
 /**
  * Created with IntelliJ IDEA.
@@ -56,6 +57,12 @@ public class MainFrame extends JFrame {
         tabbedPane.setSelectedComponent(devPanel);
         hiddenPanel1.setVisible(false);
         add(tabbedPane);
+        try {
+            newsPane.setPage("http://mineguild.de");
+            newsPane.setEditable(false);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
         passwordField.addActionListener(new ActionListener() {
             @Override
