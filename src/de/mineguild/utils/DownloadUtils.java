@@ -95,7 +95,7 @@ public class DownloadUtils {
         try {
             filename = java.net.URLEncoder.encode(filename, "UTF-8").replace("+", "%20");
         } catch (UnsupportedEncodingException e) {
-            e.printStackTrace(); //TODO
+            e.printStackTrace();
         }
 
         if (u.toString().contains("adf.ly")) {
