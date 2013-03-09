@@ -15,6 +15,9 @@ public class Login extends JDialog {
     public Login() {
         setContentPane(contentPane);
         setModal(true);
+        setAlwaysOnTop(true);
+        getRootPane().setEnabled(true);
+        getRootPane().setVisible(true);
 
         setSize(10, 10);
         setTitle("Login");
@@ -90,4 +93,5 @@ public class Login extends JDialog {
         dialog.pack();
         dialog.setVisible(true);
     }
+
 }

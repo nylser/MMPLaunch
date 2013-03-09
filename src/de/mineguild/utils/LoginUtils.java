@@ -54,7 +54,8 @@ public class LoginUtils {
                     return INVALID;
                 }
             } catch (IOException e) {
-                e.printStackTrace();
+                System.err.println("Couldn't connect to file " + url.toString());
+                return ERROR_OCCURRED;
             }
 
         } catch (MalformedURLException e) {

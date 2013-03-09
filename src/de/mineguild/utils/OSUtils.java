@@ -20,7 +20,7 @@ import java.util.Enumeration;
  */
 public class OSUtils {
     private static byte[] cachedMacAddress;
-    private static String cachedUserHome;
+    private static final String cachedUserHome;
 
     public static enum OS {
         WINDOWS,
@@ -45,9 +45,9 @@ public class OSUtils {
             File jarFile;
             jarFile = new File(codeSource.getLocation().toURI().getPath());
             return jarFile.getParentFile().getPath();
-        } catch (URISyntaxException e) {
+        } catch (URISyntaxException ignored) {
         }
-        return System.getProperty("user.dir") + "//FTB Pack Install";
+        return System.getProperty("user.dir") + "//MMP install";
     }
 
     /**
@@ -58,11 +58,11 @@ public class OSUtils {
     public static String getDynamicStorageLocation() {
         switch (getCurrentOS()) {
             case WINDOWS:
-                return System.getenv("APPDATA") + "/ftblauncher/";
+                return System.getenv("APPDATA") + "/mmplauncher/";
             case MACOSX:
-                return cachedUserHome + "/Library/Application Support/ftblauncher/";
+                return cachedUserHome + "/Library/Application Support/mmplauncher/";
             case UNIX:
-                return cachedUserHome + "/.ftblauncher/";
+                return cachedUserHome + "/.mmplauncher/";
             default:
                 return getDefInstallPath() + "/temp/";
         }
@@ -126,7 +126,7 @@ public class OSUtils {
                     return cachedMacAddress;
                 }
             }
-        } catch (SocketException e) {
+        } catch (SocketException ignored) {
         }
         return new byte[]{0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15};
     }
@@ -146,7 +146,7 @@ public class OSUtils {
                     new ProcessBuilder("xdg-open", url).start();
                 }
             }
-        } catch (Exception e) {
+        } catch (Exception ignored) {
 
         }
     }
@@ -169,7 +169,7 @@ public class OSUtils {
                     new ProcessBuilder("xdg-open", path.toString()).start();
                 }
             }
-        } catch (Exception e) {
+        } catch (Exception ignored) {
 
         }
     }

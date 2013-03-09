@@ -22,15 +22,14 @@ public class Download extends JDialog {
 
     //Status declared here.
     final static int DOWNLOAD_SUCCESSFULL = 0;
-    final static int ERROR_OCCURRED = 1;
-    final static int FILES_MISSING = 2;
+    private final static int ERROR_OCCURRED = 1;
+    private final static int FILES_MISSING = 2;
 
 
     public Download() {
         setContentPane(contentPane);
         setModal(true);
         setLocationRelativeTo(null);
-        setSize(500, 500);
         setTitle("Starting download...");
         setResizable(false);
 
@@ -68,6 +67,7 @@ public class Download extends JDialog {
         dList = list;
         Download dialog = new Download();
         dialog.pack();
+        dialog.setSize(350, 200);
         dialog.setVisible(true);
         return status;
     }
@@ -97,12 +97,14 @@ public class Download extends JDialog {
                 float totalSize = 0;
                 float overallRead = 0;
 
-
+                int c = 0;
                 for (Map.Entry<File, URL> entry : list.entrySet()) {
+                    c++;
                     URL curUrl = entry.getValue();
                     try {
                         HttpURLConnection connection = (HttpURLConnection) curUrl.openConnection();
                         totalSize += connection.getContentLength();
+                        downloadPInfo.setText("Getting info of " + c + "/" + list.entrySet().size() + " :\n" + entry.getKey().getName());
                     } catch (Exception e) {
                         e.printStackTrace();
                         status = ERROR_OCCURRED;
@@ -112,7 +114,7 @@ public class Download extends JDialog {
 
                 }
 
-                int c = 0;
+                c = 0;
                 for (Map.Entry<File, URL> entry : list.entrySet()) {
                     c++;
                     File curFile = entry.getKey();
@@ -168,8 +170,8 @@ public class Download extends JDialog {
 
     }
 
-// --Commented out by Inspection START (23.02.13 23:14):
-//    private boolean validate(File file, byte[] md5) throws Exception {
+    // --Commented out by Inspection START (23.02.13 23:14):
+//    private boolean validateUrl(File file, byte[] md5) throws Exception {
 //        MessageDigest md = MessageDigest.getInstance("MD5");
 //        InputStream is = new FileInputStream(file);
 //        try {
